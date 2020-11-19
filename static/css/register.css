@@ -1,0 +1,136 @@
+.form-class{
+	/*border: 2px solid black;*/
+	border-color: red;
+	width: 60%;
+	margin: auto;
+	/*background-color: #29b55f;*/
+	/*background-color: #E50914;*/
+	background-color: white;
+	/*border-radius:10px;*/
+	margin-top:50px;
+}
+
+#first_name,#user_name,#password,#confirm_password,#email,#register{
+	padding: 15px;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	width: 60%;
+	box-sizing: content-box;
+	font-family: montserrat;
+	font-weight: 50;
+	color: #2C3E50;
+	font-size: 15px;
+	text-align: left;
+	display: block;
+	margin:auto;
+	
+}
+
+/*body {
+	background-color: white;
+	}*/
+
+#last_name{
+	padding: 15px;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	width: 60%;
+	box-sizing: content-box;
+	font-family: montserrat;
+	font-weight: 50;
+	color: #2C3E50;
+	font-size: 15px;
+	text-align: left;
+	display: block;
+	margin:auto;
+}
+
+.heading{
+	padding: 10px;
+	/*border: 1px solid #ccc;
+	border-radius: 3px;*/
+	font-size: 20px solid;
+	width: 40%;
+	box-sizing: content-box;
+	font-family: montserrat, arial, verdana;
+	color: black;
+	
+	font-weight: 1000px;
+	text-align: center;
+	display: block;
+	margin: auto;
+	/*border: 2px solid bla/ck;*/
+	margin-top:15px;
+}
+
+#submit{
+	padding: 10px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	width: 20%;
+	box-sizing: content-box;
+	font-family: montserrat, arial, verdana;
+	color: black;
+	font-size: 15px;
+	text-align: center;
+	display: block;
+
+	margin: auto;
+	clear:both;
+
+}
+
+.input-boxes1{
+    
+    margin:0;
+    margin-top: 10px;
+    margin-bottom: 20px;
+	/*border: 2px solid yellow;*/
+	width:49.5%;
+	float:left;
+}
+
+.inboxes2{
+	margin-top:10px;
+	width:99%;
+	border:2px solid black;
+	
+}
+.error-boxes1{
+	/*margin:0;*/
+    margin-top: 2px;
+    
+    /*margin-bottom: 20px;*/
+    margin-left:64px;
+	/*border: 2px solid yellow;*/
+	width:80%;
+	float:left;
+	color:red;
+}
+
+.error-boxes2{
+	margin-top: 2px;
+    
+    /*margin-bottom: 20px;*/
+    margin-left:64px;
+	/*border: 2px solid yellow;*/
+	width:60%;
+	float:left;
+}
+
+.alreadyexists{
+	/*padding: 5px;*/
+	/*border: 2px solid yellow;*/
+	border-radius: 3px;
+	width: 60%;
+	margin-top:0;
+	/*box-sizing: content-box;*/
+	font-family: montserrat;
+	font-weight: 50;
+	color: #2C3E50;
+	font-size: 15px;
+	text-align: center;
+	display: block;
+	margin: auto;
+	clear:both;
+}

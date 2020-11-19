@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link type = "text/css" rel="stylesheet" href = "{{ url_for('static', filename = 'css/movie.css') }}" ></link>
+	<link type = "text/css" rel="stylesheet" href = "{{ url_for('static', filename = 'css/bootstrap.min.css') }}" ></link>
+    <link type = "text/css" rel="stylesheet" href = "{{ url_for('static', filename = 'css/style.css') }}" ></link>
+    <script type="text/javascript" src="{{ url_for('static', filename = 'js/bootstrap.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename = 'js/jquery-1.3.2.js') }}"></script>
+	<style>
+    #result{
+      position: absolute;
+      width:100%;
+      max-width: 500px;
+      cursor: pointer;
+      overflow-y: auto;
+      max-height: 400px;
+      box-sizing: border-box;
+      z-index: 1001;
+    }
+    .link-class:hover{
+      background-color: #f1f1f1;
+    }
+    .disabled {
+    	cursor:not-allowed;
+        pointer-events: none;
+
+    }
+  </style>
+</head>
+<body >
+		<div class="header">
+      <div class="container" style="width:100%;">
+        <a class="logo-icon" href="/userhome">
+          <img src="{{ url_for('static', filename = 'images/capture1.png') }}" width="150px" style="float:left;">
+        </a>
+        <div class="container1" style="width:500px;float:left;margin-top: 0.25%;margin-left: 3%">
+      <div align="center">
+        <input type="text" name="search" id="search" placeholder="Search Movies Here" class="form-control" >
+      </div>
+      <ul class="list-group" id="result"></ul>
+    </div>
+        <ul class="menu" style="">
+          <li><a href="/userratinginformation">Your Activity</a></li>
+          <li><a href="/explore">Explore</a></li>
+          <li><a href="#">MoviesRated:{{no_movies_rated}}</a></li>
+          <li><a href="/logout">Logout</a></li>
+          <li><a href="/userhome">{{name}}</a></li>
+        </ul>
+        <div style="clear:both;"></div>
+      </div>
+    </div>
+
+		<div>
+			
+			<div class="poster" style="margin-left: 1%"><img src="{{movie_details.imgLink}}"></div>
+			<div class="bigbox" style="margin-top: 2%">	
+				
+				
+
+				<div class="moviename" style="margin-left: 2.4%"><p>{{ movie_details.movieName}}</p></div>
+
+				<div class="box5">
+				{%if rated_flag!=0 %}
+					<p>Your Rating --- {{rated_flag}}</p>
+					<form action="/clear/{{movie_details.movieId}}" method="POST">
+						<input type="submit" name="Clear Rating" value="Clear">
+					</form>
+				{%else %}
+					<div style="clear:both;">You have not rated this movie yet</div>
+					<form name="ratingform" action="/rate/{{movie_details.movieId}}" method="POST" >
+						
+						
+						<div class="rating">
+    						<input type="radio" id="star5" name="Rating" value="5" onchange="this.form.submit()"/><label class = "full" for="star5" title="Awesome - 5 stars"></label>
+    						<input type="radio" id="star4half" name="Rating" value="4.5" onchange="this.form.submit()" /><label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
+    						<input type="radio" id="star4" name="Rating" value="4" onchange="this.form.submit()" /><label class = "full" for="star4" title="Pretty good - 4 stars"></label>
+    						<input type="radio" id="star3half" name="Rating" value="3.5" onchange="this.form.submit()" /><label class="half" for="star3half" title="Average - 3.5 stars"></label>
+    						<input type="radio" id="star3" name="Rating" value="3" onchange="this.form.submit()" /><label class = "full" for="star3" title="Average - 3 stars"></label>
+    						<input type="radio" id="star2half" name="Rating" value="2.5" onchange="this.form.submit()" /><label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
+    						<input type="radio" id="star2" name="Rating" value="2" onchange="this.form.submit()" /><label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
+    						<input type="radio" id="star1half" name="Rating" value="1.5" onchange="this.form.submit()" /><label class="half" for="star1half" title="Meh - 1.5 stars"></label>
+    						<input type="radio" id="star1" name="Rating" value="1" onchange="this.form.submit()" /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>
+    						<input type="radio" id="starhalf" name="Rating" value="0.5" onchange="this.form.submit()" /><label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
+    						
+						</div>
+
+						
+						<div  style="float:left;margin-left: 3%;margin-top: 0.5%"><input class="btn rate-button btn-primary" style="padding-top: 0%;padding-bottom: 0%;" type="submit" name="Rate" value="Rate"></div>
+
+					</form>
+				{% endif %}
+				</div>
+				<div style="clear:both;">
+				<div class="box3"><h4 style="clear:both;color:blue"><div class="box7">Average Rating</div></h4><div class="box10">{{ movie_details.avgRating|round(2,'floor')}}</div></div>
+
+				<div class="box3"><h4 style="color:blue"><div class="box7">recoMe Predicts for you </div></h4><div class="box10">{{predicted_rating|round(2,'floor')}}</div> </div>
+
+				<div class="box3"><h4 style="color:blue"><div class="box7">Genres</div></h4><br>
+					<div class="box10" style="width: 90%;margin-left: 10px;">{% for key,value in movie_details.genres.items() %}
+						{% if value==1 %}
+							{{key}},
+						{%endif%}
+					{% endfor %}</div>
+			    </div>	
+
+			    <div class="box3"><h4 style="color:blue"><div class="box7">Language</div></h4><div class="box10">{{ movie_details.language}}</div></div>
+			    
+				<div class="box3"><h4 style="color:blue"><div class="box7">Release Date</div></h4><div class="box10">{{ movie_details.releaseDate}}</div></div>
+				
+				<div class="box3"><h4 style="color:blue"><div class="box7">Run Time</div></h4><div class="box10">{{ movie_details.runTime}}</div></div>
+				<div style="clear:both;"></div>
+				</div>
+				
+
+				
+
+				
+
+			</div>
+
+			<div class="description" style="margin-top: 2%;margin-left: 2%"><div class="box9"><h3 style="color:blue;">Description</h3></div>{{movie_details.description}}</div>
+		<div class="box11" style="margin-top: 2.5%">
+			<div class="box4" style="margin-top: 2%"><h4 style="color:blue">Cast</h4><div >{%for value in movie_details.crew %}{{value}},{%endfor%}</div></div>
+			<div class="box4" ><h4 style="color:blue">Crew</h4>
+				<div >{%for key,value in movie_details.cast.items() %}
+				<div style="color:blue">{{key}}</div>
+					{% for people in value %}
+						{{people}},
+					{%endfor%}<br>
+				{%endfor%}</div>
+				</div>
+
+				
+				
+
+			<div class="box4"><h4 style="color:blue">Links</h4>
+					
+				<h4><div class="box12"><a href="http://themoviedb.org/movie/{{movie_details.tmdbId}}">TMDB</a></div></h4>
+
+				<h4><div class="box12"><a href="http://imdb.com/title/tt{{movie_details.imdbId}}">IMDB</a></div></h4>
+			</div>
+			
+			
+		</div>
+		</div>
+		
+</body>
+
+
+<script>
+  $(document).ready(function(){
+    $('#search').keyup(function(){
+      $('#result').html('');
+      var searchField=$('#search').val();
+      var expression=new RegExp(searchField,"i");
+      $.getJSON('search/movies',function(data){
+        var cnt=0
+        $.each(data,function(key,value){
+          if(value.movieName.search(expression)!= -1)
+          {
+            cnt=cnt+1
+            if(cnt<100 && value.movieName.search(expression)!= -1)
+            {
+              $('#result').append('<a style="display:block;" href="'+value.moviePage+'" target="_blank"><li class="list-group-item link-class" style="display:inline-block;"><img class="img-thumbnail" src="'+value.imgLink+'" style="height:30px;width:30px;"  /> <span class="text-muted" style="font-size:15px">'+value.movieName+'</span></a>');
+            }
+          }
+        });
+      });
+     });
+
+    $(document).click(function(){				
+					var k=document.forms['ratingform']['Rating'].value;
+					
+					if(k=='')
+					{
+						
+						$('.btn').addClass('disabled');
+						
+					}
+					else
+					{
+						
+						$('.btn').removeClass('disabled');
+					}
+				});
+				$('.btn').addClass('disabled');
+
+    $('body').click(function() {
+      // body...
+      $('#result').html('');
+    });
+  });
+
+</script>
+
+</html>

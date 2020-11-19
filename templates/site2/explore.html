@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/explore.css')}}">
+	<!-- <link rel="stylesheet" href="static/css/bootstrap-3.3.7.min.css"> -->
+	<link type = "text/css" rel="stylesheet" href = "{{ url_for('static', filename = 'css/bootstrap.min.css') }}" ></link>
+    <link type = "text/css" rel="stylesheet" href = "{{ url_for('static', filename = 'css/style.css') }}" ></link>
+    <script type="text/javascript" src="static/js/jquery-1.3.2.js"></script>
+    <script type="text/javascript" src="static/js/bootstrap.min.js"></script>
+  <style>
+    #result{
+      position: absolute;
+      width:100%;
+      width: 500px;
+      cursor: pointer;
+      overflow-y: auto;
+      max-height: 400px;
+      /*box-sizing: border-box;*/
+      z-index: 1001;
+    }
+    .link-class:hover{
+      background-color: #f1f1f1;
+    }
+  </style>
+<!--   <script src="static/js/jquery-3.2.1.min.js"></script>
+  <script src="static/js/bootstrap.min.js"></script> -->
+</head>
+<body>
+		<div class="header">
+      <div class="container" style="width:100%;">
+        <a class="logo-icon" href="/userhome">
+          <img src="{{ url_for('static', filename = 'images/capture1.png') }}"  style="width:150px;float:left;">
+        </a>
+        <div class="container1" style="width:500px;float:left;margin-top: 0.25%;margin-left: 3%">
+      <div align="center">
+        <input type="text" name="search" id="search" placeholder="Search Movies Here" class="form-control" >
+      </div>
+      <ul class="list-group" id="result"></ul>
+    </div>
+        <ul class="menu" style="">
+          <li><a href="/userratinginformation">Your Activity</a></li>
+          <li><a href="/explore">Explore</a></li>
+          <li><a href="#">MoviesRated:{{no_movies_rated}}</a></li>
+          <li><a href="/logout">Logout</a></li>
+          <li><a href="/userhome">{{name}}</a></li>
+        </ul>
+        <div style="clear:both;"></div>
+      </div>
+    </div>
+
+		<div class="form">
+		<form action="/explore" method="GET" >
+			<div class="select">
+			<p style="color: #90D8FF" >Select Genre</p>
+			<select name="genre"  >
+				<option value="All">All</option>
+				<option value="Comedy">Comedy</option>
+				<option value="Horror">Horror</option>
+				<option value="Children">Children</option>
+				<option value="Adventure">Adventure</option>
+				<option value="Action">Action</option>
+				<option value="Film-Noir">Film-Noir</option>
+				<option value="Western">Western</option>
+				<option value="Drama">Drama</option>
+				<option value="Fantasy">Fantasy</option>
+				<option value="Crime">Crime</option>
+				<option value="Romance">Romance</option>
+				<option value="IMAX">IMAX</option>
+				<option value="Animation">Animation</option>
+				<option value="Mystery">Mystery</option>
+				<option value="Documentary">Documentary</option>
+				<option value="Thriller">Thriller</option>
+				<option value="War">War</option>
+				<option value="Musical">Musical</option>
+				<option value="Sci-Fi">Sci-Fi</option>
+			</select></div>
+
+			<div class="select">
+			<p style="color:  #90D8FF">Rated or Not Rated</p>
+			<select name="d_type">
+				<option value="All">All</option>
+				<option value="rated">Rated by You</option>
+				<option value="not rated">Not Rated</option>
+			</select></div>
+
+			<div class="select">
+			<p style="color:  #90D8FF">Sort By</p>
+			<select name="sortby">
+				<option value="predicted_rating">Predicted Rating</option>
+				<option value="avg_rating">Avg Rating</option>
+			</select></div>
+
+			<div class="filter">
+			<input type="submit" name="Filter" value="Filter">
+			</div>
+
+			<div style="clear:both"></div>
+		</form></div>
+		
+		<div class="movie_row">
+			{% for movie in movies %}
+				<div class="movie_box" style="padding:0px; margin-top: 5%;"> 
+					<div class="movie_name"><a target="_blank" href="/movie/{{movie.movieId}}"><div class="info" style="text-overflow:clip; white-space: nowrap;font-size: 92% margin-left:1%;" title="{{ movie.movieName }}">{{ movie.movieName }}</div></a></div>
+					<p class="movie_date" style="color: black;background-color: white;margin: 0px auto;font-size: 90%;">{{ movie.releaseDate}}</p>
+					<a href="/movie/{{movie.movieId}}" target="_blank" style="display: block;">
+					<div class="container1">
+					<div class="image"><img src="{{ movie.imgLink }}" target="_blank" alt="image is loading" style="height: 80%;"></div>
+					<div class="overlay">
+						<!-- <p class="m_details">{{ movie.releaseDate}}</p> -->
+						<p></p>
+						<p class="m_details">{{ movie.language}}</p>
+						<p class="m_details"><strong>Avg rating:</strong>{{ movie.avgRating |round(2, 'floor')}}</p>
+						<h5 class="m_details"><strong>Genres:</strong></h5>
+						{% for key,value in movie.genres.items() %}
+							{%  if value==1 %}
+								<div class="m_details">{{key}}</div>
+							{%endif%}
+						{%endfor%}
+					
+						<!-- <p><a href="/movie/{{movie.movieId}}">Movie Link</a></p> -->
+
+					</div>
+					</div>
+					</a>
+				</div>
+			{% endfor %}
+			<div style="clear:both"></div>
+			</div>
+
+		<div class="pages">
+			<ul class="pagination"></ul>
+		</div>
+
+		<script >
+		$(document).ready(function(){
+			var pageSize=24;
+			var pageCount = Math.ceil($(".movie_box").length / pageSize);
+    
+	     for(var i = 0 ; i<pageCount;i++){
+	        
+	       $(".pagination").append('<li><a href="#">'+(i+1)+'</a></li> ');
+	     }
+			showPage(1)
+			$('.pagination li a').click(function(){
+				k=$(this).text();
+				showPage(parseInt(k))
+			});
+		});
+		showPage = function(page) {
+		var pageSize=24;
+	    $(".movie_box").hide();
+	    $(".movie_box").each(function(n) {
+	        if (n >= pageSize * (page - 1) && n < pageSize * page)
+	            $(this).show();
+	    });   
+
+	    $('#search').keyup(function(){
+      $('#result').html('');
+      var searchField=$('#search').val();
+      var expression=new RegExp(searchField,"i");
+      $.getJSON('movie/search/movies',function(data){
+        var cnt=0
+        $.each(data,function(key,value){
+          if(value.movieName.search(expression)!= -1)
+          {
+            cnt=cnt+1
+            if(cnt<100 && value.movieName.search(expression)!= -1)
+            {
+              $('#result').append('<a style="display:block;" href="'+value.moviePage+'" target="_blank"><li class="list-group-item link-class" style="display:inline-block;"><img class="img-thumbnail" src="'+value.imgLink+'" style="height:30px;width:30px;"  /> <span class="text-muted" style="font-size:15px">'+value.movieName+'</span></a>');
+            }
+          }
+        });
+      });
+     });
+
+    $('body').click(function() {
+      // body...
+      $('#result').html('');
+    });
+
+
+	}
+
+	
+
+	</script>
+</body>
+</html>

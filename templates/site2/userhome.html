@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>User home</title>
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/home.css')}}">
+	<!-- <link rel="stylesheet" href="static/css/bootstrap-3.3.7.min.css"> -->
+	<link type = "text/css" rel="stylesheet" href = "{{ url_for('static', filename = 'css/bootstrap.min.css') }}" ></link>
+    <link type = "text/css" rel="stylesheet" href = "{{ url_for('static', filename = 'css/style.css') }}" ></link>
+    <script type="text/javascript" src="static/js/jquery-1.3.2.js"></script>
+    <script type="text/javascript" src="static/js/bootstrap.min.js"></script>
+  <style>
+    #result{
+      position: absolute;
+      width:100%;
+      max-width: 500px;
+      cursor: pointer;
+      overflow-y: auto;
+      max-height: 400px;
+      box-sizing: border-box;
+      z-index: 1001;
+    }
+    .link-class:hover{
+      background-color: #f1f1f1;
+    }
+  </style>
+</head>
+<body>
+		<div class="header">
+      <div class="container" style="width:100%;">
+        <a class="logo-icon">
+          <img src="{{ url_for('static', filename = 'images/capture1.png') }}"  style="width:150px;float:left;">
+        </a>
+        <div class="container1" style="width:500px;float:left;margin-top: 0.25%;margin-left: 3%">
+      <div align="center">
+        <input type="text" name="search" id="search" placeholder="Search Movies Here" class="form-control" >
+      </div>
+      <ul class="list-group" id="result"></ul>
+    </div>
+        <ul class="menu" style="">
+          <li><a href="/userratinginformation">Your Activity</a></li>
+          <li><a href="/explore">Explore</a></li>
+          <li><a href="#">MoviesRated:{{no_movies_rated}}</a></li>
+          <li><a href="/logout">Logout</a></li>
+          <li><a href="/userhome">{{name}}</a></li>
+        </ul>
+        <div style="clear:both;"></div>
+      </div>
+    </div>
+		<div class="box_repeat">
+			{% if number_movies_rated < 15 %}
+			<div class="error_msg">
+				<h5 style="color: red;">*Please rate more than 15 movies to use your personal recommender. These recommendations are based on your interested genre. Predicted ratings will not be available</h5>
+			</div>
+			{% endif %}
+			<div class="top_row" style="width: 29%">
+			  
+			<h1>Recommended for you</h1></li>
+			</div>
+			<div class="more_link">
+			<a href="/explore?5000/explore?genre=All&d_type=All&sortby=predicted_rating&Filter=Filter" target="_blank" style="display: block;color: black;">see more</a></li>
+			 </div>
+			
+			<div class="movie_row" style="">
+			{% for movie in movies_recommended %}
+				<div class="movie_box" style="padding:0px;"> 
+					<div class="movie_name"><a target="_blank" href="/movie/{{movie.movieId}}"><div class="info" style="text-overflow:clip; white-space: nowrap;font-size: 92%" title="{{ movie.movieName }}">{{ movie.movieName }}</div></a></div>
+					<p class="movie_date" style="color: black;background-color: white;margin: 0px auto;font-size: 90%">{{ movie.releaseDate}}</p>
+					<a target="_blank" href="/movie/{{movie.movieId}}" style="display: block;">
+					<div class="container_box">
+					<div class="image"><img  src="{{ movie.imgLink }}" alt="image is loading"></div>
+					<div class="overlay">
+						<!-- <p class="m_details">{{ movie.releaseDate}}</p> -->
+						<p></p>
+						<p class="m_details">{{ movie.language}}</p>
+
+						<p class="m_details" ><strong>Avg Rating:</strong>{{ movie.avgRating |round(2, 'floor')}}</p>
+						<h5 class="m_details"><strong>Genres:</strong></h5>
+						{% for key,value in movie.genres.items() %}
+							{%  if value==1 %}
+								<div class="m_details">{{key}}</div>
+							{%endif%}
+						{%endfor%}
+					
+						<!-- <p><a href="/movie/{{movie.movieId}}">Movie Link</a></p> -->
+
+					</div>
+					</div>
+					</a>
+				</div>
+			{% endfor %}
+		    	
+			<div style="clear:both"></div>
+			</div>		
+		</div>
+		<div class="box_repeat">
+			<div class="top_row" style="width: 15%">
+			<h1>Top Rated</h1></div>
+			<div class="more_link">
+			<a href="http://localhost:5000/explore?genre=All&d_type=All&sortby=avg_rating&Filter=Filter" target="_blank" style="display: block;color: black;">see more</a></li>
+			 </div>
+			<div class="movie_row">
+				{% for movie in top_rated %}
+					<div class="movie_box" style="padding:0px;"> 
+					<div class="movie_name"><a target="_blank" href="/movie/{{movie.movieId}}"><div class="info" style="text-overflow:clip; white-space: nowrap;" title="{{ movie.movieName }}">{{ movie.movieName }}</div></a></div>
+					<p class="movie_date" style="color: black;background-color: white;margin: 0px auto;font-size: 90%">{{ movie.releaseDate}}</p>
+					<a target="_blank" href="/movie/{{movie.movieId}}" style="display: block;">
+						<div class="container_box">
+						<div class="image"><img src="{{ movie.imgLink }}"></div>
+						<div class="overlay">
+						<p></p>
+						<p class="m_details">{{ movie.language}}</p>
+						<p class="m_details"><strong>Avg Rating:</strong>{{ movie.avgRating |round(2, 'floor')}}</p>
+						<h5 class="m_details">Genres:</h5>
+						{% for key,value in movie.genres.items() %}
+							{%  if value==1 %}
+								<div class="m_details">{{key}}</div>
+							{%endif%}
+						{%endfor%}
+						</div>
+						</div>
+						<!-- <p><a href="/movie/{{movie.movieId}}">Movie Link</a></p> -->
+						</a>
+					</div>
+				{% endfor %}
+				<div style="clear:both"></div>
+			</div>
+		</div>
+		{% if number_movies_rated==0 %}
+		<div class="n_rated">
+			<h2>You have not rated any movies yet</h2>
+		</div>
+		{% elif number_movies_rated>0 %}
+		<div class="box_repeat">
+			<div class="top_row" style="width: 24%">
+			<h1>Movies You Rated</h1></div>
+			<div class="more_link">
+			<a href="http://localhost:5000/explore?genre=All&d_type=rated&sortby=avg_rating&Filter=Filter" target="_blank" style="display: block;color: black;">see more</a></li>
+			 </div>
+			<div class="movie_row">
+				{% for movie in movies_rated %}
+					<div class="movie_box" style="padding:0px;"> 
+					<div class="movie_name"><a target="_blank" href="/movie/{{movie.movieId}}"><div class="info" style="text-overflow:clip; white-space: nowrap;" title="{{ movie.movieName }}">{{ movie.movieName }}</div></a></div>
+					<p class="movie_date" style="color: black;background-color: white;margin: 0px auto;font-size: 90%">{{ movie.releaseDate}}</p>
+					<a target="_blank" href="/movie/{{movie.movieId}}" style="display: block;">
+						<div class="container_box">
+						<div class="image" style="margin: 0px auto"><img src="{{ movie.imgLink }}"></div>
+						<div class="overlay">
+						<p></p>
+						<p class="m_details">{{ movie.language}}</p>
+						<p id="rating" class="m_details"><strong>Avg Rating:</strong>{{movie.avgRating |round(2, 'floor')}}</p>
+						<h5 class="m_details">Genres:</h5>
+						{% for key,value in movie.genres.items() %}
+							{%  if value==1 %}
+								<div class="m_details">{{key}}</div>
+							{%endif%}
+						{%endfor%}
+						<!-- <p><a href="/movie/{{movie.movieId}}">Movie Link</a></p> -->
+						</div>
+						</div>
+						</a>
+					</div>
+					
+				{% endfor %}
+				<div style="clear:both"></div>
+			</div>
+		</div>
+		{% endif %}
+
+</body>
+
+<script>
+  $(document).ready(function(){
+    $('#search').keyup(function(){
+      $('#result').html('');
+      var searchField=$('#search').val();
+      var expression=new RegExp(searchField,"i");
+      $.getJSON('movie/search/movies',function(data){
+        var cnt=0
+        $.each(data,function(key,value){
+          if(value.movieName.search(expression)!= -1)
+          {
+            cnt=cnt+1
+            if(cnt<100 && value.movieName.search(expression)!= -1)
+            {
+              $('#result').append('<a style="display:block;" href="'+value.moviePage+'" target="_blank"><li class="list-group-item link-class" style="display:inline-block;"><img class="img-thumbnail" src="'+value.imgLink+'" style="height:30px;width:30px;"  /> <span class="text-muted" style="font-size:15px">'+value.movieName+'</span></a>');
+            }
+          }
+        });
+      });
+     });
+
+    $('body').click(function() {
+      // body...
+      $('#result').html('');
+    });
+  });
+
+</script>
+</html>
+

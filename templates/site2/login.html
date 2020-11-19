@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>
+		
+	</title>
+	<link type = "text/css" rel="stylesheet" href = "{{ url_for('static', filename = 'css/bootstrap.min.css') }}" ></link>
+    <link type = "text/css" rel="stylesheet" href = "{{ url_for('static', filename = 'css/style.css') }}" ></link>
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/login.css')}}"></link>
+</head>
+<body style="background-image: url({{ url_for('static', filename='css/images/collage.jpg') }})">
+	<div class="header">
+      <div class="container">
+        <a class="logo-icon">
+          <img src="{{ url_for('static', filename = 'images/capture1.png') }}" width="150px">
+        </a>
+
+        <ul class="menu">
+          <!-- <li><a href="/login">Login</a></li> -->
+          <li><a href="/register">Register</a></li>
+        </ul>
+      </div>
+    </div>
+	<div class="form-class">
+	<form action="/login/check" method="POST">
+		
+            <div class="heading">Login Form</div>
+            {{ form.hidden_tag() }}         
+               <br>
+               <div class="input-boxes1">{{ form.user(placeholder="User Name") }}</div>
+              
+               {% for message in form.user.errors %}
+	         	<div class="error-boxes1">{{ message }}</div>
+	      	   {% endfor %}
+               <br>
+               <div class="input-boxes1">{{ form.password(placeholder="Password") }}</div>
+               {% for message in form.password.errors %}
+	           <div class="error-boxes1">{{ message }}</div>
+	      	   {% endfor %}
+	      	   {% if errors==1 %}
+				<div class="error-boxes1">*Invalid Login Credentials</div>
+			   {% endif %}
+	      	  <br>
+               {{ form.submit }}
+            
+            <div class="notamember"><p>Not a member!!! <a href="/register/check" style="color:red">REGISTER</a></p></div>
+          
+	      
+	      
+
+	      
+
+        
+		
+
+	</form>
+	</div>
+	
+</body>
+</html>

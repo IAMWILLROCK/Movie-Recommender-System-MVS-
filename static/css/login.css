@@ -1,0 +1,93 @@
+.form-class{
+
+	/*border: 2px solid black;*/
+	border-color: red;
+	width: 30%;
+	margin: auto;
+	margin-top:100px;
+	/*background-color: #29b55f;*/
+	background-color: white;
+	/*border-radius :10px;*/
+}
+
+#user,#password{
+	padding: 15px;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	width: 60%;
+	box-sizing: content-box;
+	font-family: montserrat;
+	font-weight: 50;
+	color: #2C3E50;
+	font-size: 15px;
+	text-align: left;
+	display: block;
+	margin: auto;
+	
+}
+
+.heading{
+	padding: 10px;
+	/*border: 1px solid #ccc;
+	border-radius: 3px;*/
+	width: 40%;
+	box-sizing: content-box;
+	font-family: montserrat, arial, verdana;
+	color:#29b55f;
+	font-size: 20px solid;
+	font-weight: 1000px;
+	text-align: center;
+	display: block;
+	display: block;
+	margin: auto;
+	/*border: 2px solid black;*/
+	margin-top:15px;
+}
+
+#submit{
+	padding: 10px;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	width: 40%;
+	box-sizing: content-box;
+	font-family: montserrat, arial, verdana;
+	color: red;
+	font-size: 15px;
+	text-align: center;
+	display: block;
+	margin: auto;
+
+}
+
+.input-boxes1{
+	/*border: 2px solid yellow;*/
+	
+}
+
+.notamember{
+	padding: 5px;
+	/*border: 2px solid yellow;*/
+	border-radius: 3px;
+	width: 60%;
+	box-sizing: content-box;
+	font-family: montserrat;
+	font-weight: 50;
+	color: #2C3E50;
+	font-size: 15px;
+	text-align: center;
+	display: block;
+	margin: auto;
+
+}
+
+.error-boxes1{
+	/*margin:0;*/
+    margin-top: 2px;
+    
+    margin-bottom: 20px;
+    margin-left:17%;
+	/*border: 2px solid yellow;*/
+	width:80%;
+	/*float:left;*/
+	color:red;
+}

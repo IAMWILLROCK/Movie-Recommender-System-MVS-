@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+	
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/ui.css')}}">
+  <link type = "text/css" rel="stylesheet" href = "{{ url_for('static', filename = 'css/bootstrap.min.css') }}" ></link>
+  <!-- <link type = "text/css" rel="stylesheet" href = "{{ url_for('static', filename = 'css/style.css') }}" ></link> -->
+  <script type="text/javascript" src="{{ url_for('static', filename = 'js/bootstrap.min.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename = 'js/jquery-1.3.2.js') }}"></script>
+  <style >
+    .disabled {
+        pointer-events: none;
+        opacity: 0.6;
+    }
+  </style>
+  
+	<title>Genre</title>
+   
+</head>
+<body>
+<div class="header">
+      <div class="container">
+        <a class="logo-icon" href="/userhome"> 
+          <img src="{{ url_for('static', filename = 'images/capture1.png') }}" width="150px">
+        </a>
+
+        <ul class="menu">
+          <!-- <li><a href="/login">Login</a></li>
+          <li><a href="/register">Register</a></li> -->
+        </ul>
+      </div>
+    </div>
+  
+	<div class="whole1">
+    <div class="neon1">GENRES</div>
+	
+	<form name="genreform" action="/getInterestedGenre">
+		
+<div class="content1">
+      <div class="box1" style="border: 2px solid red";>
+        <h1 class="header1">Select Genres</h1>
+        <p></p>
+        <div class="left1">
+        <p>
+          <input type="checkbox" id="c1" name="genre" value="Comedy">
+          <label for="c1">Comedy</label>
+        </p>
+        <p>
+         <input type="checkbox" id="c2" name="genre" value="Horror">
+          <label for="c2">Horror</label>
+        </p>
+        <p>
+         <input type="checkbox" id="c3" name="genre" value="Children">
+          <label for="c3">Children</label>
+        </p>
+        <p>
+        <input type="checkbox" id="c4" name="genre" value="Adventure">
+          <label for="c4">Adventure</label>
+        </p>
+        </div>
+        <div class="left1">
+        <p>
+         <input type="checkbox" id="c5" name="genre" value="Action">
+          <label for="c5">Action</label>
+        </p>
+        <p>
+         <input type="checkbox" id="c6" name="genre" value="Film-Noir">
+          <label for="c6">Film-Noir</label>
+        </p>
+        <p>
+        <input type="checkbox" id="c7" name="genre" value="Western">
+          <label for="c7">Western</label>
+        </p>
+        <p>
+         <input type="checkbox" id="c8" name="genre" value="Drama">
+          <label for="c8">Drama</label>
+        </p>
+        </div>
+        <div class="left1">
+        <p>
+         <input type="checkbox" id="c9" name="genre" value="Fantasy">
+          <label for="c9">Fantasy</label>
+        </p>
+        <p>
+        <input type="checkbox" id="c10" name="genre" value="Crime">
+          <label for="c10">Crime</label>
+        </p>
+        <p>
+         <input type="checkbox" id="c11" name="genre" value="Romance">
+          <label for="c11">Romance</label>
+        </p>
+        <p>
+         <input type="checkbox" id="c12" name="genre" value="Animation">
+          <label for="c12">Animation</label>
+        </p>
+        </div>
+        <div class="left1">
+        <p>
+        <input type="checkbox" id="c13" name="genre" value="Mystery">
+          <label for="c13">Mystery</label>
+        </p>
+        <p>
+         <input type="checkbox" id="c14" name="genre" value="Documentary">
+          <label for="c14">Documentary</label>
+        </p>
+        <p>
+         <input type="checkbox" id="c15" name="genre" value="Thriller">
+          <label for="c15">Thriller</label>
+        </p>
+        <p>
+        <input type="checkbox" id="c16" name="genre" value="War">
+          <label for="c16">War</label>
+        </p>
+        </div>
+        <div class="left1" style="float: left; margin-right: 27px">
+        <p>
+         <input type="checkbox" id="c17" name="genre" value="Musical">
+          <label for="c17">Musical</label>
+        </p>
+        </div>
+        <div >
+        <p>
+         <input type="checkbox" id="c18" name="genre" value="Sci-Fi">
+          <label for="c18">Sci-Fi</label>
+        </p>
+        </div>
+         <div style="clear: both;"></div>
+        <div class="centre1">
+		<input class="btn btn1" type="submit" name="submit" value="submit">		
+      </div>
+        </div>
+         
+  
+	</form>
+    </div>
+    <ul id="list">Print</ul>
+</body>
+
+<script>
+  $(document).ready(function(){
+
+    $(document).click(function(){  
+          var k=document.forms['genreform']['genre'].value;
+          if($('#c1').attr('checked') || $('#c2').attr('checked') || $('#c3').attr('checked') || $('#c4').attr('checked') || $('#c5').attr('checked') || $('#c6').attr('checked') || $('#c7').attr('checked') || $('#c8').attr('checked') || $('#c9').attr('checked') || $('#c10').attr('checked') || $('#c11').attr('checked') || $('#c12').attr('checked') || $('#c13').attr('checked') || $('#c14').attr('checked') || $('#c15').attr('checked') || $('#c16').attr('checked') || $('#c17').attr('checked') || $('#c18').attr('checked') )
+          {
+            
+            $('.btn1').removeClass('disabled');
+          }
+          else
+          {
+            
+            $('.btn1').addClass('disabled');
+          }
+        });
+        $('.btn1').addClass('disabled');
+
+    
+  });
+
+</script>
+
+</html>

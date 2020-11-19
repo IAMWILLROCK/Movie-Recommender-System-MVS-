@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+<link type = "text/css" rel="stylesheet" href = "{{ url_for('static', filename = 'css/bootstrap.min.css') }}" ></link>
+    <link type = "text/css" rel="stylesheet" href = "{{ url_for('static', filename = 'css/style.css') }}" ></link>
+  <link rel="stylesheet" href="{{url_for('static',filename='css/register.css')}}">
+</head>
+
+<div class="header">
+      <div class="container">
+        <a class="logo-icon">
+          <img src="{{ url_for('static', filename = 'images/capture1.png') }}" width="150px">
+        </a>
+
+        <ul class="menu">
+          <li><a href="/login">Login</a></li>
+          <!-- <li><a href="/register">Register</a></li> -->
+        </ul>
+      </div>
+    </div>
+
+<body style="background-image: url({{ url_for('static', filename='css/images/collage.jpg') }})" >
+  
+  <!-- <img src="{{ url_for('static', filename='background.jpg') }}" alt="background photo" /> -->
+
+  <div class="form-class">
+		<form action = "/register/check" method = "post"  >
+      
+        
+            <div class="heading">Sign Up</div>
+            {{ form.hidden_tag() }}
+            
+      <div >
+              <!--div class=fs-title-->
+               <br>
+               <div class="input-boxes2"> 
+                  <div class="input-boxes1"  >{{ form.first_name(required="required",placeholder="First Name*") }}
+      
+
+                    <!--   {% for message in form.first_name.errors %}
+        			         <div class="error-boxes1">{{ message }}</div>
+        			       {% endfor %}-->
+                  </div>              
+                  <div class="input-boxes1"  >{{ form.last_name(required="required",placeholder="Last Name*") }}  
+                  <!--   {% for message in form.last_name.errors %}
+      			         <div class="error-boxes1">{{ message }}</div>
+      			         {% endfor %}-->
+                  </div> 
+              </div>
+               <br>
+
+                
+
+                   <div class="input-boxes1"  >{{ form.user_name(required="required",placeholder="User Name*") }}
+                 
+
+                   <!-- {% for message in form.user_name.errors %}
+    			         <div class="error-boxes1">{{ message }}</div>
+    			           {% endfor %} -->
+                    </div>
+                   <br>
+                   <div class="input-boxes1"  >{{ form.email(required="required",placeholder="Email*") }}
+                   
+                    <!-- {% for message in form.email.errors %}
+                   <div class="error-boxes1">{{ message }}</div>
+                   {% endfor %}-->
+                  </div>
+                
+
+               <br>
+               <div class="input-boxes1"  >{{ form.password(required="required",placeholder="Password*") }}
+               
+                {% for message in form.password.errors %}
+			         <div class="error-boxes1">{{ message }}</div>
+			           {% endfor %}
+                </div>
+               <br>
+               <div class="input-boxes1"  >{{ form.confirm_password(required="required",placeholder="Confirm Password*") }}
+               
+
+                {% for message in form.confirm_password.errors %}
+			          <div class="error-boxes1">{{ message }}</div>
+			         {% endfor %}
+                </div>
+               
+              {% if errors==1 %}
+              <div class="alreadyexists">
+              <p>UserName already exists. Pls try with another</p>
+              </div>
+              {% endif %}
+              <br>
+              {{ form.submit}}
+              <br>
+            </div>
+            
+         
+      </form>
+    </div>
+    </div>
+</body>
+
+</html>

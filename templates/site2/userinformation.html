@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+  <link rel="stylesheet/less" type="text/css" href="static/css/test.less">
+  <script type="text/javascript" src="static/js/less.min.js"></script>
+  <!-- <script type="text/javascript" src="static/js/jquery-1.3.2.js"></script> -->
+  <script type="text/javascript" src="static/js/jquery-3.2.1.min.js"></script>
+  <link rel="stylesheet" href="static/css/bootstrap-3.3.7.min.css">
+  <!-- <link type = "text/css" rel="stylesheet" href = "{{ url_for('static', filename = 'css/bootstrap.min.css') }}" ></link> -->
+    <link type = "text/css" rel="stylesheet" href = "{{ url_for('static', filename = 'css/style.css') }}" ></link>
+    
+    <script type="text/javascript" src="static/js/bootstrap.min.js"></script>
+  <style>
+    #result{
+      position: absolute;
+      width:100%;
+      max-width: 500px;
+      cursor: pointer;
+      overflow-y: auto;
+      max-height: 400px;
+      box-sizing: border-box;
+      z-index: 1001;
+    }
+    .link-class:hover{
+      background-color: #f1f1f1;
+    }
+  </style>
+</head>
+<body>
+
+   <div class="header">
+      <div class="container" style="width:100%;">
+        <a class="logo-icon" href="/userhome">
+          <img src="{{ url_for('static', filename = 'images/capture1.png') }}" style="width:150px;float:left;">
+        </a>
+        <!-- <div class="container1" style="width:500px;float:left;margin-top: 0.25%;margin-left: 3%">
+      <div align="center">
+        <input type="text" name="search" id="search" placeholder="Search Movies Here" class="form-control" >
+      </div>
+      <ul class="list-group" id="result"></ul>
+    </div> -->
+        <ul class="menu" style="">
+          <li><a href="/userratinginformation">Your Activity</a></li>
+          <li><a href="/explore">Explore</a></li>
+          <li><a href="#">MoviesRated:{{no_movies_rated}}</a></li>
+          <li><a href="/logout">Logout</a></li>
+          <li><a href="/userhome">{{name}}</a></li>
+        </ul>
+        <div style="clear:both;"></div>
+      </div>
+    </div>
+    {%if no_movies_rated>0 %}
+
+ {% set mlength = [0]%}
+  {% for key,value in d.genre_count.items() %}
+      {% if mlength[0] < value %}
+          {% set _ = mlength.pop() %}
+          {% set _ = mlength.append(value)%}
+      {% endif %}
+  {% endfor %}
+  {% set m = mlength[0] %}
+   
+ 
+  {% set m=m/10 +1 %}
+   {% set m=m|round(0,'floor') %}
+   {% set m=m*10 %} 
+   <div class="d_rating" style="border-bottom: 1px solid #D8D8D8">
+   <div class="wrap" style="width:40%;">   
+   <h2 style="font-family: 'Times New Roman';color: #252525;">Distribution of Rating</h2>
+     <div class="barGraph" >
+       <ul class="graph">
+         {% for key,value in d.rating_count.items() %}
+ 
+          <span class="graph-barBack" style="margin-left: 20%;" >
+ 
+             <li class="graph-bar" data-value="{{value*100/m}}" data-value1="{{ value }}">
+              <span class="graph-legend" style="left: -50px ;">{{key}}</span>
+               {% if value > 0 %}
+              <span style="float:right;font-size: 10px;padding: 0px;">{{value}}</span>
+              {% endif %}
+             </li>
+           </span>  
+         {% endfor %}    
+       </ul>
+     </div>  
+   </div>
+   <div style="clear:both"></div>
+ </div>
+ 
+   <!-- <p>Rating Count per Genre</p>
+   {% for key,value in d.genre_count.items() %}
+     <p>{{key}}-{{value}}</p>
+   {% endfor %} -->
+  {% set mlength = [0]%}
+  {% for key,value in d.genre_count.items() %}
+      {% if mlength[0] < value %}
+          {% set _ = mlength.pop() %}
+          {% set _ = mlength.append(value)%}
+      {% endif %}
+  {% endfor %}
+  {% set m = mlength[0] %}
+   
+ 
+  {% set m=m/10 +1 %}
+   {% set m=m|round(0,'floor') %}
+   {% set m=m*10 %} 
+  <div class="genre_profile" style="">
+    <h1 style="font-family: 'Times New Roman';color: #252525;padding-left: 4%;">Genre Profile</h1>
+   <div class="wrap" style="width:40%;">   
+   <h2 style="font-family: 'Times New Roman';color: #252525;">Rating Count per Genre</h2>
+     <div class="barGraph" >
+       <ul class="graph">
+         {% for key,value in d.genre_count.items() %}
+ 
+          <span class="graph-barBack" style="margin-left: 20%;" >
+ 
+             <li class="graph-bar" data-value="{{value*100/m}}" data-value1="{{ value }}">
+              <span class="graph-legend">{{key}}</span>
+               {% if value > 0 %}
+              <span style="float:right;font-size: 10px;padding: 0px;">{{value}}</span>
+              {% endif %}
+             </li>
+           </span>  
+         {% endfor %}    
+       </ul>
+     </div>  
+   </div>
+ 
+   <div class="wrap" style="width:40%; ">   
+   <h2 style="font-family: 'Times New Roman';color: #252525;">Average Rating per Genre</h2>
+     <div class="barGraph">
+       <ul class="graph">
+         {% for key,value in d.genre_average.items() %}
+ 
+          <span class="graph-barBack" style="margin-left: 20%;" >
+ 
+             <li class="graph-bar" style="" data-value="{{value*20}}" data-value1="{{ value|round(2,'floor') }}">
+              <span  class="graph-legend">{{key}}</span>
+              {% if value > 0 %}
+              <span style="float:right;font-size: 10px;padding: 0px;">{{value|round(2,'floor')}}</span>
+              {% endif %}
+             </li>
+           </span>  
+         {% endfor %}    
+       </ul>
+     </div>
+   </div><div style="clear:both"></div>
+  </div> 
+
+  {% else %}
+  <h2 style="font-family: 'Times New Roman';color: #252525;">You have not rated any movies yet</h2>
+  {% endif %}
+  
+</body>
+
+<script >
+  // Produces width of .barChart
+
+
+// Positioning of .bubbleChart
+// $(document).ready(function() {
+//   $('.chart-bubble').each(function() {
+//     // Bubble Size
+//     var bubbleSize = $(this).data('value');    
+//     $(this).css("width", function() {
+//       return (bubbleSize * 10) + "px"
+//     });
+//     $(this).css("height", function() {
+//       return (bubbleSize * 10) + "px"
+//     });
+    
+//     // Bubble Position
+//     var posX = $(this).data('x');
+//     var posY = $(this).data('y');    
+//     $(this).css("left", function() {
+//       return posX - (bubbleSize * 0.5) + "%"
+//     });
+//     $(this).css("bottom", function() {
+//       return posY - (bubbleSize * 0.5) + "%"
+//     });
+//   }); 
+// });
+
+
+$(document).ready(function(){
+    $('#search').keyup(function(){
+      $('#result').html('');
+      var searchField=$('#search').val();
+      var expression=new RegExp(searchField,"i");
+      $.getJSON('movie/search/movies',function(data){
+        var cnt=0
+        $.each(data,function(key,value){
+          if(value.movieName.search(expression)!= -1)
+          {
+            cnt=cnt+1
+            if(cnt<100 && value.movieName.search(expression)!= -1)
+            {
+              $('#result').append('<a style="display:block;" href="'+value.moviePage+'" target="_blank"><li class="list-group-item link-class" style="display:inline-block;"><img class="img-thumbnail" src="'+value.imgLink+'" style="height:30px;width:30px;"  /> <span class="text-muted" style="font-size:15px">'+value.movieName+'</span></a>');
+            }
+          }
+        });
+      });
+     });
+
+    $('body').click(function() {
+      // body...
+      $('#result').html('');
+    });
+
+    $('.graph-bar').each(function() {
+     var dataWidth = $(this).data('value');
+     $(this).css("width", dataWidth + "%");
+  });
+
+  });
+
+</script>
+
+</html>
